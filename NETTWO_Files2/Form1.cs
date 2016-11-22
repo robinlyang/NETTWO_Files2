@@ -106,8 +106,25 @@ namespace NETTWO_Files2
         }
 
         private void sequentialFormatted_Click(object sender, EventArgs e)
-        {//Sequential Formatted
+        {//write many formatted records and read back
+            int id = 1;
+            string name = "Robert";
+            double amount = 123.00;
+            string record;
+            record = string.Format("{0,2:00}{1,-20}{2,8:00000.00}", id, name, amount);  //-is for left alignment and :f2 is for decimal in amount
+            StreamWriter w = new StreamWriter(@"C:\Users\ryang\Desktop\demo.dat");
+            w.WriteLine(record);
+            w.WriteLine(record);
+            w.Close();
 
+            StreamReader r = new StreamReader(@"C:\Users\ryang\Desktop\demo.dat");
+            while((record = r.ReadLine()) != null)
+            {
+                id = Convert.ToInt32(record.Substring(0, 2));
+                name = record.Substring(2, 20);
+                amount = Convert.ToDouble(record.Substring(22, 8));
+            }
+            r.Close();
         }
     }
 }
